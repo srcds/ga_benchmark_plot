@@ -27,7 +27,8 @@ y_ticks_for_ex1 = {"Distinguishability": {"ADULT": [0.4, 5], "CUP": [6, 5], "FAR
 y_ticks_for_ex2 = {"Distinguishability": {"SS13ACS": [80, 3], "CREDITCARD": [40, 3], "MACH2019": [60, 3]},
                   "Population Uniqueness":  {"SS13ACS": [100, 3], "CREDITCARD": [60, 3], "MACH2019": [80, 3]}}
 
-costum_dataset_order = ['SS13ACS', 'CREDITCARD', 'MACH2019']
+costum_dataset_order_ld = ["ADULT", "ATUS", "IHIS"]
+costum_dataset_order_hd = ['SS13ACS', 'CREDITCARD', 'MACH2019']
 costum_algorithm_order_ld = ["OPTIMAL", "BEST_EFFORT_BOTTOM_UP", "BEST_EFFORT_GENETIC", "BEST_EFFORT_TOP_DOWN"]
 costum_algorithm_order_hd = ["BEST_EFFORT_BOTTOM_UP", "BEST_EFFORT_GENETIC", "BEST_EFFORT_TOP_DOWN"]
 
@@ -110,7 +111,7 @@ def draw_experiment1(input_file, output_file, figure_title="", costum_dataset_or
         algorithms = df['algorithm'].unique()
 
     #prepare figure
-    fig, axs = plt.subplots(nrows=1, ncols=len(datasets), figsize=(8, 2), dpi=100)
+    fig, axs = plt.subplots(nrows=1, ncols=len(datasets), figsize=(5, 2), dpi=100)
 
     #matplotlib.rcParams['hatch.linewidth'] = 3
 
@@ -129,10 +130,11 @@ def draw_experiment1(input_file, output_file, figure_title="", costum_dataset_or
         axs[i].set_ylim(0, y_tick_config[0])
         axs[i].set_title(dataset_aliases[dataset], fontsize="9")
 
-    fig.text(0.06, 0.5, 'Time (s)', va='center', rotation='vertical')
+    #fig.text(0.06, 0.5, 'Time (s)', va='center', rotation='vertical')
+    axs[0].set_ylabel("Time (s)")
 
     handles, labels = axs[0].get_legend_handles_labels()
-    fig.legend(handles, labels, loc='lower center', ncol=4, bbox_to_anchor=(0.5,-0.0))
+    fig.legend(handles, labels, loc='lower center', ncol=4, bbox_to_anchor=(0.5,-0.0), prop={"size": 9})
     fig.suptitle(figure_title)
 
     plt.subplots_adjust(top=0.78)
@@ -143,8 +145,8 @@ def draw_experiment1(input_file, output_file, figure_title="", costum_dataset_or
     fig.savefig(output_file)
 
 
-#draw_experiment1("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment1_kAnon.csv", "ex1_kAnon.svg", "Distinguishability", costum_algorithm_order=costum_algorithm_order_ld)
-#draw_experiment1("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment1_popUnique.csv", "ex1_PopUnique.svg", "Population Uniqueness",costum_algorithm_order=costum_algorithm_order_ld)
+draw_experiment1("results\\Experiment1_kAnon.csv", "figures\\ex1_kAnon.svg", "Distinguishability", costum_dataset_order=costum_dataset_order_ld, costum_algorithm_order=costum_algorithm_order_ld)
+draw_experiment1("results\\Experiment1_popUnique.csv", "figures\\ex1_PopUnique.svg", "Population Uniqueness", costum_dataset_order=costum_dataset_order_ld, costum_algorithm_order=costum_algorithm_order_ld)
 
 
 def draw_experiment2(input_file, output_file, figure_title="", costum_dataset_order=[], costum_algorithm_order=[]):
@@ -181,7 +183,6 @@ def draw_experiment2(input_file, output_file, figure_title="", costum_dataset_or
 
         sum_array = np.mean(np.array(new_utility_traces), axis=0)
         sum_array *= 100
-        #sum_array = new_utility_traces[0]
 
         return sum_array
 
@@ -230,8 +231,8 @@ def draw_experiment2(input_file, output_file, figure_title="", costum_dataset_or
     fig.savefig(output_file)
 
 
-#draw_experiment2("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment2_kAnon.csv", "ex2_kAnon.svg", figure_title="Distinguishability", costum_algorithm_order=costum_algorithm_order_hd, costum_dataset_order=costum_dataset_order)
-#draw_experiment2("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment2_popUnique.csv", "ex2_popUnique.svg", figure_title="Population Uniqueness",costum_algorithm_order=costum_algorithm_order_hd,costum_dataset_order=costum_dataset_order)
+draw_experiment2("results\\Experiment2_kAnon.csv", "figures\\ex2_kAnon.svg", figure_title="Distinguishability", costum_algorithm_order=costum_algorithm_order_hd, costum_dataset_order=costum_dataset_order_hd)
+draw_experiment2("results\\Experiment2_popUnique.csv", "figures\\ex2_popUnique.svg", figure_title="Population Uniqueness",costum_algorithm_order=costum_algorithm_order_hd,costum_dataset_order=costum_dataset_order_hd)
 
 
 def draw_experiment3(input_file, output_file, figure_title="", costum_dataset_order=[],  costum_algorithm_order=[]):
@@ -291,5 +292,5 @@ def draw_experiment3(input_file, output_file, figure_title="", costum_dataset_or
     plt.show()
     fig.savefig(output_file)
 
-#draw_experiment3("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment3_kAnon - Kopie.csv", "ex3_kAnon.svg", "Distinguishability", costum_dataset_order=costum_dataset_order)
-#draw_experiment3("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment3_PopUnique_with_30s.csv",  "ex3_PopUnique.svg", "Population Uniqueness", costum_dataset_order=costum_dataset_order)
+draw_experiment3("results\\Experiment3_kAnon.csv", "figures\\ex3_kAnon.svg", "Distinguishability", costum_dataset_order=costum_dataset_order_hd)
+draw_experiment3("results\\Experiment3_PopUnique.csv",  "figures\\ex3_PopUnique.svg", "Population Uniqueness", costum_dataset_order=costum_dataset_order_hd)
