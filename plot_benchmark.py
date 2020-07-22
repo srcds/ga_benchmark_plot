@@ -143,14 +143,8 @@ def draw_experiment1(input_file, output_file, figure_title="", costum_dataset_or
     fig.savefig(output_file)
 
 
-draw_experiment1("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment1_kAnon.csv", "ex1_kAnon.svg", "Distinguishability", costum_algorithm_order=costum_algorithm_order_ld)
+#draw_experiment1("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment1_kAnon.csv", "ex1_kAnon.svg", "Distinguishability", costum_algorithm_order=costum_algorithm_order_ld)
 #draw_experiment1("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment1_popUnique.csv", "ex1_PopUnique.svg", "Population Uniqueness",costum_algorithm_order=costum_algorithm_order_ld)
-
-#draw_experiment1("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\NEW_pruneFix\\Experiment1_kAnon_gaFix.csv", "ex1_kAnon.svg", "k-Anonymity", costum_algorithm_order=costum_algorithm_order)
-#draw_experiment1("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\NEW_pruneFix\\Experiment1_popUnique_gaFix.csv", "ex1_PopUnique.svg", "Population Uniqueness",costum_algorithm_order=costum_algorithm_order)
-
-#draw_experiment1("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\NEW_pruneFix\\Experiment1_kAnon_gaFix5.csv", "ex1_kAnon.svg", "k-Anonymity", costum_algorithm_order=costum_algorithm_order)
-#draw_experiment1("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\NEW_pruneFix\\Experiment1_popUnique_gaFix2.csv", "ex1_kAnon.svg", "Population Uniqueness", costum_algorithm_order=costum_algorithm_order)
 
 
 def draw_experiment2(input_file, output_file, figure_title="", costum_dataset_order=[], costum_algorithm_order=[]):
@@ -239,63 +233,6 @@ def draw_experiment2(input_file, output_file, figure_title="", costum_dataset_or
 #draw_experiment2("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment2_kAnon.csv", "ex2_kAnon.svg", figure_title="Distinguishability", costum_algorithm_order=costum_algorithm_order_hd, costum_dataset_order=costum_dataset_order)
 #draw_experiment2("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment2_popUnique.csv", "ex2_popUnique.svg", figure_title="Population Uniqueness",costum_algorithm_order=costum_algorithm_order_hd,costum_dataset_order=costum_dataset_order)
 
-#draw_experiment2("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\NEW_pruneFix\\Experiment2_kAnon_gaWAN_08.csv", "ex2_kAnon.svg", figure_title="k-Anonymity",costum_dataset_order=costum_dataset_order)
-#draw_experiment2("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\NEW_pruneFix\\Experiment2_popUnique_gaWAN_08.csv", "ex2_popUnique.svg", figure_title="Population Uniqueness",costum_dataset_order=costum_dataset_order)
-
-def draw_experiment3a(input_file, output_file, costum_dataset_order=[], costum_algorithm_order=[]):
-    descriptive_column_names = ['algorithm', 'dataset', 'timeLimit']
-    df = load_and_calc_avg(input_file, descriptive_column_names)
-
-    # get name of all datasets, timeLimits and algorithms
-    if costum_dataset_order:
-        datasets = costum_dataset_order
-    else:
-        datasets = df['dataset'].unique()
-    if costum_algorithm_order:
-        algorithms = costum_algorithm_order
-    else:
-        algorithms = df['algorithm'].unique()
-    time_limits = ["%d" % time_limit for time_limit in df['timeLimit'].unique()]
-
-    #prepare figure
-    fig, axs = plt.subplots(nrows=1, ncols=len(datasets), figsize=(8, 2.5), dpi=100, sharey=True)
-
-    x = np.arange(len(time_limits))  # the label locations
-    width = 0.25  # the width of the bars
-    offset = (width * len(algorithms) / -2) + width / 2
-
-    for i, dataset in enumerate(datasets):
-        for j, algorithm in enumerate(algorithms):
-            temp_res = df[(df['dataset'] == dataset) & (df['algorithm'] == algorithm)]['utility_avg']
-            style_cfg = algotihm_style_cfgs[algorithm]
-            axs[i].bar(x + offset + width * j, temp_res,  width=width, color=style_cfg['color'], label=style_cfg['label'], hatch=style_cfg['hatch'], edgecolor="black")
-
-        axs[i].set_xticks(x)
-
-        axs[i].set_xticklabels(time_limits)
-        axs[i].set_title(dataset_aliases[dataset], fontsize="9")
-        axs[i].set_ylim([0, 1])
-
-    axs[0].set_ylabel("Utility")
-    axs[1].set_xlabel("Time limit (s)")
-
-    #fig.text(0.4, 0.175, 'Time limit per iteration (s)', va='center')
-
-    handles, labels = axs[0].get_legend_handles_labels()
-
-    #ph = [plt.plot([], marker="", ls="")[0]] * 2
-    #handles = ph + handles
-    #labels = ["Algorithm: "] + labels
-    fig.legend(handles, labels, loc='lower center', ncol=4, bbox_to_anchor=(0.5,-0.0))
-    #fig.tight_layout()
-
-    plt.subplots_adjust(wspace=0.06)
-    plt.subplots_adjust(bottom=0.3)
-    plt.show()
-    fig.savefig(output_file)
-
-#draw_experiment3a("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\NEW\\Experiement3_global_final.csv", "ex3a_kAnon.svg", costum_dataset_order)
-#draw_experiment3a("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\NEW\\Experiement3_global_PopUnique_final.csv", "ex3a_PopUnique.svg", costum_dataset_order)
 
 def draw_experiment3(input_file, output_file, figure_title="", costum_dataset_order=[],  costum_algorithm_order=[]):
     descriptive_column_names = ['algorithm', 'dataset', 'timeLimit']
@@ -355,6 +292,4 @@ def draw_experiment3(input_file, output_file, figure_title="", costum_dataset_or
     fig.savefig(output_file)
 
 #draw_experiment3("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment3_kAnon - Kopie.csv", "ex3_kAnon.svg", "Distinguishability", costum_dataset_order=costum_dataset_order)
-draw_experiment3("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment3_PopUnique_with_30s.csv",  "ex3_PopUnique.svg", "Population Uniqueness", costum_dataset_order=costum_dataset_order)
-
-#draw_experiment3("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\NEW_pruneFix\\Experiment3_kAnon_gaFix.csv", "ex3_kAnon.svg", "k-Anonymity", costum_dataset_order=costum_dataset_order)
+#draw_experiment3("C:\\Users\\Thierry\\Documents\\arx_ga_bench\\FINAL\\Experiment3_PopUnique_with_30s.csv",  "ex3_PopUnique.svg", "Population Uniqueness", costum_dataset_order=costum_dataset_order)
